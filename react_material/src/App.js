@@ -1,24 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import Pokedex from './components/Pokedex';
+import PokemonProfile from './components/PokemonProfile';
+import {Route, Switch} from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Switch>
+    {/* 这里可以用render, 也可以用component =  */}
+     <Route exact path='/' render={(props) => <Pokedex {...props} />} />
+     <Route exact path='/pokemon/:pokemonId' render={(props) => <PokemonProfile {...props} />} />
+   </Switch>
   );
 }
 
