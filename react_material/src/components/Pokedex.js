@@ -30,7 +30,8 @@ function toFirstCharUpperCase(name) {
   return name.charAt(0).toUpperCase() + name.slice(1)
 }
 
-function Pokedex(pokemonId) {
+function Pokedex(props) {
+  const {history} = props
   const classes = useStyles();
   const [pokemonData, setPokemonData] = useState(mockData);
 
@@ -40,7 +41,7 @@ function Pokedex(pokemonId) {
 
     return (
       <Grid item xs={12} sm={4} key={pokemonId}>
-        <Card>
+        <Card onClick={() => history.push(`/pokemon/${pokemonId}`)}>
           <CardMedia
             className={classes.CardMedia}
             image={sprite}
