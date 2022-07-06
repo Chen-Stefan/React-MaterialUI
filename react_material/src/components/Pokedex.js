@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import mockData from "./mockData";
+import { toFirstCharUpperCase } from './constants'
 
 const useStyles = makeStyles({
   pokedexContainer: {
@@ -25,10 +26,6 @@ const useStyles = makeStyles({
     textAlign: 'center'
   }
 });
-// 这里的pokemonId是个string, 是mockData里的key
-function toFirstCharUpperCase(name) {
-  return name.charAt(0).toUpperCase() + name.slice(1)
-}
 
 function Pokedex(props) {
   const {history} = props
