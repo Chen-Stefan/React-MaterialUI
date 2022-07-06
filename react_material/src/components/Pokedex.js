@@ -1,6 +1,14 @@
-import React from "react";
-import { AppBar, Toolbar, Grid, Card, CardContent } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Grid,
+  Card,
+  CardContent,
+  CircularProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import mockData from "./mockData";
 
 const useStyles = makeStyles({
   pokedexContainer: {
@@ -21,17 +29,23 @@ const getPokemonCard = () => {
 };
 function Pokedex() {
   const classes = useStyles();
+  const [pokemonData, setPokemonData] = useState(mockData);
   return (
     <>
       <AppBar position="static">
         <Toolbar />
       </AppBar>
-      <Grid container spacing={2} className={classes.pokedexContainer}>
-        {getPokemonCard()}
-        {getPokemonCard()}
-        {getPokemonCard()}
-        {getPokemonCard()}
-      </Grid>
+      {/* 如果pokemonData存在，就显示grid; 如果不存在，就显示loading的图标 */}
+      {pokemonData ? (
+        <Grid container spacing={2} className={classes.pokedexContainer}>
+          {getPokemonCard()}
+          {getPokemonCard()}
+          {getPokemonCard()}
+          {getPokemonCard()}
+        </Grid>
+      ) : (
+        <CircularProgress />
+      )}
     </>
   );
 }
