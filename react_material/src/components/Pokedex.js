@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios'
 import {
   AppBar,
   Toolbar,
@@ -10,7 +11,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import mockData from "./mockData";
 import { toFirstCharUpperCase } from './constants'
 
 const useStyles = makeStyles({
@@ -30,11 +30,28 @@ const useStyles = makeStyles({
 function Pokedex(props) {
   const {history} = props
   const classes = useStyles();
-  const [pokemonData, setPokemonData] = useState(mockData);
+  const [pokemonData, setPokemonData] = useState({});
+
+  useEffect(() => {
+    axios.get(`https://pokeapi.co/api/v2/pokemon`).then(function (res) {
+      // 'data' comes natively inside response for any api request
+      const {data} = res
+      const {results} = data
+      const newPokemonData = {}
+      // pokemon 是一个object, index 是results array 的 index, 从0开始
+      results.forEach((pokemon, index) => {
+        newPokemonData[index + 1] = {
+          id: index + 1,
+          name: pokemon.name,
+          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
+        }
+      })
+      setPokemonData(newPokemonData)
+    })
+  }, [])
 
   const getPokemonCard = (pokemonId) => {
-    const { id, name } = pokemonData[`${pokemonId}`];
-    const sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+    const { id, name, sprite } = pokemonData[pokemonId];
 
     return (
       <Grid item xs={12} sm={4} key={pokemonId}>

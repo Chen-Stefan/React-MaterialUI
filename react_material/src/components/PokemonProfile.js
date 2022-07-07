@@ -1,13 +1,12 @@
 import { Typography, Link } from "@material-ui/core";
 import React, { useState } from "react";
-import mockData from "./mockData";
 import { toFirstCharUpperCase } from "./constants";
 
 function PokemonProfile(props) {
   const { match } = props;
   const { params } = match;
   const { pokemonId } = params;
-  const [pokemon, setPokemon] = useState(mockData[`${pokemonId}`]);
+  const [pokemon, setPokemon] = useState(undefined);
 
   const generatePokemonJSX = () => {
     const { name, id, species, height, weight, types, sprites } = pokemon;
