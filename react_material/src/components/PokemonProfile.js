@@ -1,6 +1,7 @@
 import { Typography, Link, CircularProgress, Button } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toFirstCharUpperCase } from "./constants";
+import axios from 'axios'
 
 function PokemonProfile(props) {
   const { history, match } = props;
@@ -14,6 +15,13 @@ function PokemonProfile(props) {
   // -> return actual info
   // 3. pokemon = bad data / false
   // -> return pokemon not found
+  useEffect(() => {
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`).then(function (res) {
+      const {data} = res
+      setPokemon(data)
+    })
+    .catch(error => setPokemon(false))
+  }, [pokemonId])
 
   const generatePokemonJSX = () => {
     const { name, id, species, height, weight, types, sprites } = pokemon;
