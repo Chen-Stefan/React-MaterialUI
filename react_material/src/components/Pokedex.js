@@ -9,11 +9,13 @@ import {
   CardContent,
   CircularProgress,
   Typography,
+  TextField
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { fade, makeStyles } from "@material-ui/core/styles";
+import SearchIcon from '@material-ui/icons/Search'
 import { toFirstCharUpperCase } from './constants'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   pokedexContainer: {
     paddingTop: "20px",
     paddingLeft: "50px",
@@ -24,8 +26,24 @@ const useStyles = makeStyles({
   },
   CardContent: {
     textAlign: 'center'
+  },
+  searchContainer: {
+    display: 'flex',
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    paddingLeft: "20px",
+    paddingRight: "20px",
+    marginTop: '5px',
+    marginBottom: '5px'
+  },
+  searchIcon: {
+    alignSelf: 'flex-end',
+    marginBottom: '5px'
+  },
+  searchInput: {
+    width: '200px',
+    margin: '5px'
   }
-});
+}));
 
 function Pokedex(props) {
   const {history} = props
@@ -72,7 +90,12 @@ function Pokedex(props) {
   return (
     <>
       <AppBar position="static">
-        <Toolbar />
+        <Toolbar>
+          <div className={classes.searchContainer}>
+            <SearchIcon className={classes.searchIcon} />
+            <TextField className={classes.searchInput}/>
+          </div>
+          </Toolbar>
       </AppBar>
       {/* 如果pokemonData存在，就显示grid; 如果不存在，就显示loading的图标 */}
       {pokemonData ? (
